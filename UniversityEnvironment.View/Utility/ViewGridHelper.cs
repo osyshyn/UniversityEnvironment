@@ -70,12 +70,13 @@ namespace UniversityEnvironment.View.Utility
             {
                 var admin = RepositoryManager.GetRepo<Admin>().GetById(user.Id);
                 ArgumentNullException.ThrowIfNull(admin);
+                admin.Courses ??= new List<Course>();
                 for (int i = 0; i < courses.Count; i++)
                 {
                     if ((bool)table.Rows[i].Cells[0].Value == true)
                     {
                         var course = courses[i];
-                        admin.Courses?.Add(course);
+                        admin.Courses.Add(course);
                     }
                 }
                 RepositoryManager.GetRepo<Admin>().Update(admin);
@@ -84,12 +85,14 @@ namespace UniversityEnvironment.View.Utility
             {
                 var teacher = RepositoryManager.GetRepo<Teacher>().GetById(user.Id);
                 ArgumentNullException.ThrowIfNull(teacher);
+                teacher.Courses ??= new List<Course>();
                 for (int i = 0; i < courses.Count; i++)
                 {
                     if ((bool)table.Rows[i].Cells[0].Value == true)
                     {
                         var course = courses[i];
-                        teacher.Courses?.Add(course);
+                        
+                        teacher.Courses.Add(course);
                     }
                 }
                 RepositoryManager.GetRepo<Teacher>().Update(teacher);
@@ -98,16 +101,19 @@ namespace UniversityEnvironment.View.Utility
             {
                 var student = RepositoryManager.GetRepo<Student>().GetById(user.Id);
                 ArgumentNullException.ThrowIfNull(student);
+                student.Courses ??= new List<Course>();
                 for (int i = 0; i < courses.Count; i++)
                 {
                     if ((bool)table.Rows[i].Cells[0].Value == true)
                     {
                         var course = courses[i];
-                        student.Courses?.Add(course);
+                        student.Courses.Add(course);
+                        course.Students ??= new List<Student>();
+                        course.Students.Add(student);
+                        RepositoryManager.GetRepo<Course>().Update(course);
                     }
                 }
                 RepositoryManager.GetRepo<Student>().Update(student);
-                
             }
             else { throw new Exception("Bad user role"); }
             MessageBox.Show("Successfull signed on courses!", "Environment", MessageBoxButtons.OK);
@@ -120,12 +126,13 @@ namespace UniversityEnvironment.View.Utility
             {
                 var admin = RepositoryManager.GetRepo<Admin>().GetById(user.Id);
                 ArgumentNullException.ThrowIfNull(admin);
+                admin.Courses ??= new List<Course>();
                 for (int i = 0; i < courses.Count; i++)
                 {
                     if ((bool)table.Rows[i].Cells[0].Value == true)
                     {
                         var course = courses[i];
-                        admin.Courses?.Remove(course);
+                        admin.Courses.Remove(course);
                     }
                 }
                 RepositoryManager.GetRepo<Admin>().Update(admin);
@@ -134,12 +141,13 @@ namespace UniversityEnvironment.View.Utility
             {
                 var teacher = RepositoryManager.GetRepo<Teacher>().GetById(user.Id);
                 ArgumentNullException.ThrowIfNull(teacher);
+                teacher.Courses ??= new List<Course>();
                 for (int i = 0; i < courses.Count; i++)
                 {
                     if ((bool)table.Rows[i].Cells[0].Value == true)
                     {
                         var course = courses[i];
-                        teacher.Courses?.Remove(course);
+                        teacher.Courses.Remove(course);
                     }
                 }
                 RepositoryManager.GetRepo<Teacher>().Update(teacher);
@@ -148,12 +156,13 @@ namespace UniversityEnvironment.View.Utility
             {
                 var student = RepositoryManager.GetRepo<Student>().GetById(user.Id);
                 ArgumentNullException.ThrowIfNull(student);
+                student.Courses ??= new List<Course>();
                 for (int i = 0; i < courses.Count; i++)
                 {
                     if ((bool)table.Rows[i].Cells[0].Value == true)
                     {
                         var course = courses[i];
-                        student.Courses?.Remove(course);
+                        student.Courses.Remove(course);
                     }
                 }
                 RepositoryManager.GetRepo<Student>().Update(student);
