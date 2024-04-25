@@ -29,14 +29,6 @@ namespace UniversityEnvironment.Data.Repository
         {
             return _instance ?? new RepoImplementation<TEntity>(context);
         }
-
-        public TEntity Create(TEntity obj)
-        {
-            _objects.Add(obj);
-            _context.SaveChanges();
-            return obj;
-        }
-
         public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null)
         {
             IQueryable<TEntity> query = _objects;
@@ -46,12 +38,23 @@ namespace UniversityEnvironment.Data.Repository
                 query = query.Where(filter);
             }
 
-            return [.. query]; // ToList()
+            return [.. query]; 
+        }
+        public TEntity? FindByFilter(Expression<Func<TEntity, bool>> filter)
+        {
+            return _objects.FirstOrDefault(filter);
         }
 
-        public TEntity? GetById(Guid id)
+        public TEntity? FindById(Guid id)
         {
             return _objects.Find(id);
+        }
+
+        public TEntity Create(TEntity obj)
+        {
+            _objects.Add(obj);
+            _context.SaveChanges();
+            return obj;
         }
 
         public TEntity? Update(TEntity obj)
@@ -71,11 +74,6 @@ namespace UniversityEnvironment.Data.Repository
             _objects.Remove(obj);
             _context.SaveChanges();
             return obj;
-        }
-
-        public TEntity? GetByFilter(Expression<Func<TEntity, bool>> filter)
-        {
-            return _objects.FirstOrDefault(filter);
         }
     }
 }

@@ -41,21 +41,21 @@ namespace UniversityEnvironment.View.Utility
         {
             if(user.Role == "Admin")
             {
-                Admin? admin = RepositoryManager.GetRepo<Admin>().GetById(user.Id);
+                Admin? admin = RepositoryManager.GetRepo<Admin>().FindById(user.Id);
                 ArgumentNullException.ThrowIfNull(admin);
                 if (admin.Courses == null) { return; }
                 CoursesTableAddRows(table, admin.Courses);
             }
             else if(user.Role == "Teacher")
             {
-                Teacher? teacher = RepositoryManager.GetRepo<Teacher>().GetById(user.Id);
+                Teacher? teacher = RepositoryManager.GetRepo<Teacher>().FindById(user.Id);
                 ArgumentNullException.ThrowIfNull(teacher);
                 if(teacher.Courses == null) { return; }
                 CoursesTableAddRows(table, teacher.Courses);
             }
             else if(user.Role == "Student")
             {
-                Student? student = RepositoryManager.GetRepo<Student>().GetById(user.Id);
+                Student? student = RepositoryManager.GetRepo<Student>().FindById(user.Id);
                 ArgumentNullException.ThrowIfNull(student);
                 if (student.Courses == null) { return; }
                 CoursesTableAddRows(table, student.Courses);
@@ -68,7 +68,7 @@ namespace UniversityEnvironment.View.Utility
 
             if (user.Role == "Admin")
             {
-                var admin = RepositoryManager.GetRepo<Admin>().GetById(user.Id);
+                var admin = RepositoryManager.GetRepo<Admin>().FindById(user.Id);
                 ArgumentNullException.ThrowIfNull(admin);
                 admin.Courses ??= new List<Course>();
                 for (int i = 0; i < courses.Count; i++)
@@ -83,7 +83,7 @@ namespace UniversityEnvironment.View.Utility
             }
             if (user.Role == "Teacher")
             {
-                var teacher = RepositoryManager.GetRepo<Teacher>().GetById(user.Id);
+                var teacher = RepositoryManager.GetRepo<Teacher>().FindById(user.Id);
                 ArgumentNullException.ThrowIfNull(teacher);
                 teacher.Courses ??= new List<Course>();
                 for (int i = 0; i < courses.Count; i++)
@@ -99,7 +99,7 @@ namespace UniversityEnvironment.View.Utility
             }
             if (user.Role == "Student")
             {
-                var student = RepositoryManager.GetRepo<Student>().GetById(user.Id);
+                var student = RepositoryManager.GetRepo<Student>().FindById(user.Id);
                 ArgumentNullException.ThrowIfNull(student);
                 student.Courses ??= new List<Course>();
                 for (int i = 0; i < courses.Count; i++)
@@ -110,7 +110,7 @@ namespace UniversityEnvironment.View.Utility
                         student.Courses.Add(course);
                         course.Students ??= new List<Student>();
                         course.Students.Add(student);
-                        RepositoryManager.GetRepo<Course>().Update(course);
+                        RepositoryManager.GetRepo<Course>().Update(course); // my question how to save course that i signed to student?
                     }
                 }
                 RepositoryManager.GetRepo<Student>().Update(student);
@@ -124,7 +124,7 @@ namespace UniversityEnvironment.View.Utility
 
             if (user.Role == "Admin")
             {
-                var admin = RepositoryManager.GetRepo<Admin>().GetById(user.Id);
+                var admin = RepositoryManager.GetRepo<Admin>().FindById(user.Id);
                 ArgumentNullException.ThrowIfNull(admin);
                 admin.Courses ??= new List<Course>();
                 for (int i = 0; i < courses.Count; i++)
@@ -139,7 +139,7 @@ namespace UniversityEnvironment.View.Utility
             }
             if (user.Role == "Teacher")
             {
-                var teacher = RepositoryManager.GetRepo<Teacher>().GetById(user.Id);
+                var teacher = RepositoryManager.GetRepo<Teacher>().FindById(user.Id);
                 ArgumentNullException.ThrowIfNull(teacher);
                 teacher.Courses ??= new List<Course>();
                 for (int i = 0; i < courses.Count; i++)
@@ -154,7 +154,7 @@ namespace UniversityEnvironment.View.Utility
             }
             if (user.Role == "Student")
             {
-                var student = RepositoryManager.GetRepo<Student>().GetById(user.Id);
+                var student = RepositoryManager.GetRepo<Student>().FindById(user.Id);
                 ArgumentNullException.ThrowIfNull(student);
                 student.Courses ??= new List<Course>();
                 for (int i = 0; i < courses.Count; i++)

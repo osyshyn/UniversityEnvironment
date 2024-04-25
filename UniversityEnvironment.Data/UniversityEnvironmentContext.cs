@@ -23,10 +23,11 @@ namespace UniversityEnvironment.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var serverVersion = new MySqlServerVersion(new Version(8, 3, 0));
-            optionsBuilder.UseMySql("server=localhost;user=root;password=14tr0ll23;database=UniversalEnvironment", serverVersion);
+            optionsBuilder.UseMySql("server=localhost;user=root;password=1111;database=UniversalEnvironment", serverVersion);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            14tr0ll23
             /*modelBuilder.Entity<Course>()
                 .HasMany(a => a.Admins)
                 .WithMany(c => c.Courses)

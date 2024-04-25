@@ -13,10 +13,10 @@ namespace UniversityEnvironment.Data.Repository
     public interface IRepository<TEntity> where TEntity : EnvironmentObject
     {
         IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null);
+        TEntity? FindById(Guid id);
+        TEntity? FindByFilter(Expression<Func<TEntity, bool>> filter);
         TEntity Create(TEntity entity);
         TEntity? Update(TEntity entity);
         TEntity? Delete(TEntity entity);
-        TEntity? GetById(Guid id);
-        TEntity? GetByFilter(Expression<Func<TEntity, bool>> filter);
     }
 }

@@ -26,5 +26,6 @@ namespace UniversityEnvironment.Data.Model
                 _mark = value;
             }
         }
+        public Guid StudentId { get => _studentId; set => _studentId = value; }
     }
 }

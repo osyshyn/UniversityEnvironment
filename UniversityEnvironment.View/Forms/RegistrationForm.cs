@@ -27,7 +27,7 @@ namespace UniversityEnvironment.View.Forms
         {
             if (AdminCheck.Checked)
             {
-                if(RepositoryManager.GetRepo<Admin>().GetByFilter(u => u.Username == UsernameTextBox.Text) == null)
+                if(RepositoryManager.GetRepo<Admin>().FindByFilter(u => u.Username == UsernameTextBox.Text) == null)
                 {
                     var user = new Admin
                     {
@@ -48,7 +48,7 @@ namespace UniversityEnvironment.View.Forms
             if (TeacherCheck.Checked)
             {
                 string scienceDegree = Microsoft.VisualBasic.Interaction.InputBox("Введіть вашу ступінь:", "Введення тексту", "");
-                if (RepositoryManager.GetRepo<Teacher>().GetByFilter(u => u.Username == UsernameTextBox.Text) == null)
+                if (RepositoryManager.GetRepo<Teacher>().FindByFilter(u => u.Username == UsernameTextBox.Text) == null)
                 {
                     var user = new Teacher
                     {
@@ -69,7 +69,7 @@ namespace UniversityEnvironment.View.Forms
             }
             else
             {
-                if (RepositoryManager.GetRepo<Student>().GetByFilter(u => u.Username == UsernameTextBox.Text) == null)
+                if (RepositoryManager.GetRepo<Student>().FindByFilter(u => u.Username == UsernameTextBox.Text) == null)
                 {
                     var user = new Student
                     {

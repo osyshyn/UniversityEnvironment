@@ -45,7 +45,7 @@ namespace UniversityEnvironment.View.Forms
             if (AdminCheck.Checked)
             {
                 var ourAdmin = RepositoryManager.GetRepo<User>()
-                    .GetByFilter(u => u.Username == UsernameTextBox.Text && u.Password == PasswordTextBox.Text);
+                    .FindByFilter(u => u.Username == UsernameTextBox.Text && u.Password == PasswordTextBox.Text);
                 if (ourAdmin != null)
                 {
                     actualUser.Id = ourAdmin.Id;
@@ -60,7 +60,7 @@ namespace UniversityEnvironment.View.Forms
             else if (TeacherCheck.Checked)
             {
                 var ourTeacher = RepositoryManager.GetRepo<Teacher>()
-                    .GetByFilter(u => u.Username == UsernameTextBox.Text && u.Password == PasswordTextBox.Text);
+                    .FindByFilter(u => u.Username == UsernameTextBox.Text && u.Password == PasswordTextBox.Text);
                 if (ourTeacher != null)
                 {
                     actualUser.Id = ourTeacher.Id;
@@ -75,7 +75,7 @@ namespace UniversityEnvironment.View.Forms
             else
             {
                 var ourStudent = RepositoryManager.GetRepo<Student>()
-                    .GetByFilter(u => u.Username == UsernameTextBox.Text && u.Password == PasswordTextBox.Text);
+                    .FindByFilter(u => u.Username == UsernameTextBox.Text && u.Password == PasswordTextBox.Text);
                 if (ourStudent != null)
                 {
                     actualUser.Id = ourStudent.Id;
