@@ -18,16 +18,35 @@ namespace UniversityEnvironment.Data
         public DbSet<TestMarks> TestMarks { get; set; }
         public DbSet<TestQuestion> TestQuestion { get; set; }
         public DbSet<QuestionAnswer> QuestionAnswer { get; set; }
+        public DbSet<CourseStudent> CourseStudents { get; set; }
 
         public UniversityEnvironmentContext() { }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var serverVersion = new MySqlServerVersion(new Version(8, 3, 0));
-            optionsBuilder.UseMySql("server=localhost;user=root;password=1111;database=UniversalEnvironment", serverVersion);
+            optionsBuilder.UseMySql("server=localhost;user=root;password=1234;database=UniversalEnvironment", serverVersion);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            14tr0ll23
+            modelBuilder.Entity<CourseStudent>()
+                .ToTable("coursestudent")
+                .HasKey(cs => new { cs.StudentsId, cs.CoursesId }); // Define composite primary key
+
+            modelBuilder.Entity<CourseStudent>()
+                .ToTable("coursestudent")
+                .HasOne(cs => cs.Student)
+                .WithMany(s => s.CourseStudents) // Assuming Student has a navigation property CourseStudents
+                .HasForeignKey(cs => cs.StudentsId)
+                .OnDelete(DeleteBehavior.Cascade); // Specify the delete behavior if a student is deleted
+
+            modelBuilder.Entity<CourseStudent>()
+                .ToTable("coursestudent")
+                .HasOne(cs => cs.Course)
+                .WithMany(c => c.CourseStudents) // Assuming Course has a navigation property CourseStudents
+                .HasForeignKey(cs => cs.CoursesId)
+                .OnDelete(DeleteBehavior.Cascade); // Specify the delete behavior if a course is deleted
+
+
             /*modelBuilder.Entity<Course>()
                 .HasMany(a => a.Admins)
                 .WithMany(c => c.Courses)

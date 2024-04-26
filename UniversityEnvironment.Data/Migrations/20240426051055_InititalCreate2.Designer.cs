@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UniversityEnvironment.Data;
 
@@ -11,9 +12,11 @@ using UniversityEnvironment.Data;
 namespace UniversityEnvironment.Data.Migrations
 {
     [DbContext(typeof(UniversityEnvironmentContext))]
-    partial class UniversityEnvironmentContextModelSnapshot : ModelSnapshot
+    [Migration("20240426051055_InititalCreate2")]
+    partial class InititalCreate2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,22 +141,6 @@ namespace UniversityEnvironment.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Courses");
-                });
-
-            modelBuilder.Entity("UniversityEnvironment.Data.Model.CourseStudent", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid?>("CousesId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid?>("StudentsId")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("coursestudent");
                 });
 
             modelBuilder.Entity("UniversityEnvironment.Data.Model.QuestionAnswer", b =>
@@ -360,25 +347,6 @@ namespace UniversityEnvironment.Data.Migrations
                         .HasForeignKey("TestsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("UniversityEnvironment.Data.Model.CourseStudent", b =>
-                {
-                    b.HasOne("UniversityEnvironment.Data.Model.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("UniversityEnvironment.Data.Model.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-
-                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("UniversityEnvironment.Data.Model.QuestionAnswer", b =>

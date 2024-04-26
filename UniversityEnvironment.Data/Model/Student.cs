@@ -12,5 +12,6 @@ namespace UniversityEnvironment.Data.Model
         private List<QuestionAnswer>? _questionAnswers;
         public List<Test>? Tests { get => _tests; set => _tests = value; }
         public List<QuestionAnswer>? QuestionAnswers { get => _questionAnswers; set => _questionAnswers = value; }
+        public List<CourseStudent> CourseStudents { get; set; }
     }
 }

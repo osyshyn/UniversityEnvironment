@@ -23,5 +23,6 @@ namespace UniversityEnvironment.Data.Model
         public List<Admin>? Admins { get => _admins; set => _admins = value; }
         public List<Teacher>? Teachers { get => _teachers; set => _teachers = value; }
         public List<Student>? Students { get => _students; set => _students = value; }
+        public List<CourseStudent> CourseStudents { get; set; }
     }
 }
