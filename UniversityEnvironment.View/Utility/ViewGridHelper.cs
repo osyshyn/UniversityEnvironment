@@ -62,32 +62,24 @@ namespace UniversityEnvironment.View.Utility
             }
             else { throw new Exception("Bad user role"); }
         }
-
-        public static void UpdateTableWithActualCourses<T>(DataGridView table, T user) where T : User
-        {
-            T? _user = RepositoryManager.GetRepo<T>().FindById(user.Id);
-            ArgumentNullException.ThrowIfNull(_user);
-            if (_user.Courses == null) { return; }
-            CoursesTableAddRows(table, _user.Courses);
-        }
-
-
         public static void SignUserOnCourse(DataGridView table, User user)
         {
-            var courses = RepositoryManager.GetRepo<Course>().GetAll().ToList();
+            List<Course> courses = RepositoryManager.GetRepo<Course>().GetAll().ToList();
+
             if (user.Role == "Admin")
             {
                 var admin = RepositoryManager.GetRepo<Admin>().FindById(user.Id);
                 ArgumentNullException.ThrowIfNull(admin);
-
+                admin.Courses ??= new List<Course>();
                 for (int i = 0; i < courses.Count; i++)
                 {
-                    //var value = table.Rows[i].Cells[0].Value;
-                    //if (value != null && bool.TryParse(value.ToString(), out bool parsed) && parsed)
-                    //{
-                    //    selectedCourses.Add(courses[i]);
-                    //}
+                    if ((bool)table.Rows[i].Cells[0].Value == true)
+                    {
+                        var course = courses[i];
+                        admin.Courses.Add(course);
+                    }
                 }
+                RepositoryManager.GetRepo<Admin>().Update(admin);
             }
             if (user.Role == "Teacher")
             {
@@ -107,23 +99,21 @@ namespace UniversityEnvironment.View.Utility
             }
             if (user.Role == "Student")
             {
-                var studentCourses = new List<CourseStudent>();
                 var student = RepositoryManager.GetRepo<Student>().FindById(user.Id);
                 ArgumentNullException.ThrowIfNull(student);
+                student.Courses ??= new List<Course>();
                 for (int i = 0; i < courses.Count; i++)
                 {
-                    var value = table.Rows[i].Cells[0].Value;
-                    if (value != null && bool.TryParse(value.ToString(), out bool parsed) && parsed)
+                    if ((bool)table.Rows[i].Cells[0].Value == true)
                     {
-                        studentCourses.Add(new()
-                        {
-                            StudentsId = user.Id,
-                            CoursesId = courses[i].Id
-                        });
+                        var course = courses[i];
+                        student.Courses.Add(course);
+                        course.Students ??= new List<Student>();
+                        course.Students.Add(student);
+                        RepositoryManager.GetRepo<Course>().Update(course); // my question how to save course that i signed to student?
                     }
                 }
-
-                RepositoryManager.GetRepo<CourseStudent>().Create(studentCourses);
+                RepositoryManager.GetRepo<Student>().Update(student);
             }
             else { throw new Exception("Bad user role"); }
             MessageBox.Show("Successfull signed on courses!", "Environment", MessageBoxButtons.OK);

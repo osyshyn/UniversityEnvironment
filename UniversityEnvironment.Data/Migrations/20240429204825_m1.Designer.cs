@@ -12,8 +12,8 @@ using UniversityEnvironment.Data;
 namespace UniversityEnvironment.Data.Migrations
 {
     [DbContext(typeof(UniversityEnvironmentContext))]
-    [Migration("20240425152748_InititalCreate")]
-    partial class InititalCreate
+    [Migration("20240429204825_m1")]
+    partial class m1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -143,6 +143,51 @@ namespace UniversityEnvironment.Data.Migrations
                     b.ToTable("Courses");
                 });
 
+            modelBuilder.Entity("UniversityEnvironment.Data.Model.CourseAdmin", b =>
+                {
+                    b.Property<Guid>("AdminId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("CourseId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("AdminId", "CourseId");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("coursesadmins", (string)null);
+                });
+
+            modelBuilder.Entity("UniversityEnvironment.Data.Model.CourseStudent", b =>
+                {
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("CourseId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("StudentId", "CourseId");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("coursesstudents", (string)null);
+                });
+
+            modelBuilder.Entity("UniversityEnvironment.Data.Model.CourseTeacher", b =>
+                {
+                    b.Property<Guid>("TeacherId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("CourseId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("TeacherId", "CourseId");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("coursesteachers", (string)null);
+                });
+
             modelBuilder.Entity("UniversityEnvironment.Data.Model.QuestionAnswer", b =>
                 {
                     b.Property<Guid>("Id")
@@ -156,7 +201,22 @@ namespace UniversityEnvironment.Data.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("QuestionAnswer");
+                    b.ToTable("QuestionAnswers");
+                });
+
+            modelBuilder.Entity("UniversityEnvironment.Data.Model.QuestionAnswerStudent", b =>
+                {
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("QuestionAnswerId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("StudentId", "QuestionAnswerId");
+
+                    b.HasIndex("QuestionAnswerId");
+
+                    b.ToTable("questionanswersstudents", (string)null);
                 });
 
             modelBuilder.Entity("UniversityEnvironment.Data.Model.Student", b =>
@@ -236,7 +296,7 @@ namespace UniversityEnvironment.Data.Migrations
                     b.ToTable("Tests");
                 });
 
-            modelBuilder.Entity("UniversityEnvironment.Data.Model.TestMarks", b =>
+            modelBuilder.Entity("UniversityEnvironment.Data.Model.TestMark", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -244,6 +304,9 @@ namespace UniversityEnvironment.Data.Migrations
 
                     b.Property<int>("Mark")
                         .HasColumnType("int");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("char(36)");
 
                     b.Property<Guid?>("TestId")
                         .HasColumnType("char(36)");
@@ -268,7 +331,22 @@ namespace UniversityEnvironment.Data.Migrations
 
                     b.HasIndex("TestId");
 
-                    b.ToTable("TestQuestion");
+                    b.ToTable("TestQuestions");
+                });
+
+            modelBuilder.Entity("UniversityEnvironment.Data.Model.TestStudent", b =>
+                {
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("TestId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("StudentId", "TestId");
+
+                    b.HasIndex("TestId");
+
+                    b.ToTable("testsstudents", (string)null);
                 });
 
             modelBuilder.Entity("AdminCourse", b =>
@@ -346,6 +424,63 @@ namespace UniversityEnvironment.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("UniversityEnvironment.Data.Model.CourseAdmin", b =>
+                {
+                    b.HasOne("UniversityEnvironment.Data.Model.Admin", "Admin")
+                        .WithMany("CoursesAdmins")
+                        .HasForeignKey("AdminId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UniversityEnvironment.Data.Model.Course", "Course")
+                        .WithMany("CoursesAdmins")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Admin");
+
+                    b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("UniversityEnvironment.Data.Model.CourseStudent", b =>
+                {
+                    b.HasOne("UniversityEnvironment.Data.Model.Course", "Course")
+                        .WithMany("CoursesStudents")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UniversityEnvironment.Data.Model.Student", "Student")
+                        .WithMany("CoursesStudents")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("UniversityEnvironment.Data.Model.CourseTeacher", b =>
+                {
+                    b.HasOne("UniversityEnvironment.Data.Model.Course", "Course")
+                        .WithMany("CoursesTeachers")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UniversityEnvironment.Data.Model.Teacher", "Teacher")
+                        .WithMany("CoursesTeachers")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Teacher");
+                });
+
             modelBuilder.Entity("UniversityEnvironment.Data.Model.QuestionAnswer", b =>
                 {
                     b.HasOne("UniversityEnvironment.Data.Model.TestQuestion", "Question")
@@ -353,6 +488,25 @@ namespace UniversityEnvironment.Data.Migrations
                         .HasForeignKey("QuestionId");
 
                     b.Navigation("Question");
+                });
+
+            modelBuilder.Entity("UniversityEnvironment.Data.Model.QuestionAnswerStudent", b =>
+                {
+                    b.HasOne("UniversityEnvironment.Data.Model.QuestionAnswer", "QuestionAnswer")
+                        .WithMany("QuestionAnswersStudents")
+                        .HasForeignKey("QuestionAnswerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UniversityEnvironment.Data.Model.Student", "Student")
+                        .WithMany("QuestionAnswersStudent")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("QuestionAnswer");
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("UniversityEnvironment.Data.Model.Test", b =>
@@ -364,7 +518,7 @@ namespace UniversityEnvironment.Data.Migrations
                     b.Navigation("Course");
                 });
 
-            modelBuilder.Entity("UniversityEnvironment.Data.Model.TestMarks", b =>
+            modelBuilder.Entity("UniversityEnvironment.Data.Model.TestMark", b =>
                 {
                     b.HasOne("UniversityEnvironment.Data.Model.Test", "Test")
                         .WithMany("Marks")
@@ -382,9 +536,58 @@ namespace UniversityEnvironment.Data.Migrations
                     b.Navigation("Test");
                 });
 
+            modelBuilder.Entity("UniversityEnvironment.Data.Model.TestStudent", b =>
+                {
+                    b.HasOne("UniversityEnvironment.Data.Model.Student", "Student")
+                        .WithMany("TestsStudents")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UniversityEnvironment.Data.Model.Test", "Test")
+                        .WithMany("TestsStudents")
+                        .HasForeignKey("TestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
+
+                    b.Navigation("Test");
+                });
+
+            modelBuilder.Entity("UniversityEnvironment.Data.Model.Admin", b =>
+                {
+                    b.Navigation("CoursesAdmins");
+                });
+
             modelBuilder.Entity("UniversityEnvironment.Data.Model.Course", b =>
                 {
+                    b.Navigation("CoursesAdmins");
+
+                    b.Navigation("CoursesStudents");
+
+                    b.Navigation("CoursesTeachers");
+
                     b.Navigation("Tests");
+                });
+
+            modelBuilder.Entity("UniversityEnvironment.Data.Model.QuestionAnswer", b =>
+                {
+                    b.Navigation("QuestionAnswersStudents");
+                });
+
+            modelBuilder.Entity("UniversityEnvironment.Data.Model.Student", b =>
+                {
+                    b.Navigation("CoursesStudents");
+
+                    b.Navigation("QuestionAnswersStudent");
+
+                    b.Navigation("TestsStudents");
+                });
+
+            modelBuilder.Entity("UniversityEnvironment.Data.Model.Teacher", b =>
+                {
+                    b.Navigation("CoursesTeachers");
                 });
 
             modelBuilder.Entity("UniversityEnvironment.Data.Model.Test", b =>
@@ -392,6 +595,8 @@ namespace UniversityEnvironment.Data.Migrations
                     b.Navigation("Marks");
 
                     b.Navigation("Questions");
+
+                    b.Navigation("TestsStudents");
                 });
 
             modelBuilder.Entity("UniversityEnvironment.Data.Model.TestQuestion", b =>

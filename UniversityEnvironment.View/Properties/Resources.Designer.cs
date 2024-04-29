@@ -61,15 +61,6 @@ namespace UniversityEnvironment.View.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to server=localhost;user=root;password=1234;database=UniversalEnvironment.
-        /// </summary>
-        internal static string ConnectionString {
-            get {
-                return ResourceManager.GetString("ConnectionString", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Cybersecurity {

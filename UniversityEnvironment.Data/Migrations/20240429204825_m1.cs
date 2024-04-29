@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace UniversityEnvironment.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InititalCreate : Migration
+    public partial class m1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -99,24 +99,24 @@ namespace UniversityEnvironment.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "AdminCourse",
+                name: "coursesadmins",
                 columns: table => new
                 {
-                    AdminsId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    CoursesId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                    AdminId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CourseId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AdminCourse", x => new { x.AdminsId, x.CoursesId });
+                    table.PrimaryKey("PK_coursesadmins", x => new { x.AdminId, x.CourseId });
                     table.ForeignKey(
-                        name: "FK_AdminCourse_Admins_AdminsId",
-                        column: x => x.AdminsId,
+                        name: "FK_coursesadmins_Admins_AdminId",
+                        column: x => x.AdminId,
                         principalTable: "Admins",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AdminCourse_Courses_CoursesId",
-                        column: x => x.CoursesId,
+                        name: "FK_coursesadmins_Courses_CourseId",
+                        column: x => x.CourseId,
                         principalTable: "Courses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -146,24 +146,24 @@ namespace UniversityEnvironment.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "CourseStudent",
+                name: "coursesstudents",
                 columns: table => new
                 {
-                    CoursesId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    StudentsId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                    StudentId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CourseId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CourseStudent", x => new { x.CoursesId, x.StudentsId });
+                    table.PrimaryKey("PK_coursesstudents", x => new { x.StudentId, x.CourseId });
                     table.ForeignKey(
-                        name: "FK_CourseStudent_Courses_CoursesId",
-                        column: x => x.CoursesId,
+                        name: "FK_coursesstudents_Courses_CourseId",
+                        column: x => x.CourseId,
                         principalTable: "Courses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CourseStudent_Students_StudentsId",
-                        column: x => x.StudentsId,
+                        name: "FK_coursesstudents_Students_StudentId",
+                        column: x => x.StudentId,
                         principalTable: "Students",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -171,50 +171,25 @@ namespace UniversityEnvironment.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "CourseTeacher",
+                name: "coursesteachers",
                 columns: table => new
                 {
-                    CoursesId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    TeachersId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                    TeacherId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    CourseId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CourseTeacher", x => new { x.CoursesId, x.TeachersId });
+                    table.PrimaryKey("PK_coursesteachers", x => new { x.TeacherId, x.CourseId });
                     table.ForeignKey(
-                        name: "FK_CourseTeacher_Courses_CoursesId",
-                        column: x => x.CoursesId,
+                        name: "FK_coursesteachers_Courses_CourseId",
+                        column: x => x.CourseId,
                         principalTable: "Courses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CourseTeacher_Teachers_TeachersId",
-                        column: x => x.TeachersId,
+                        name: "FK_coursesteachers_Teachers_TeacherId",
+                        column: x => x.TeacherId,
                         principalTable: "Teachers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "StudentTest",
-                columns: table => new
-                {
-                    StudentsId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    TestsId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StudentTest", x => new { x.StudentsId, x.TestsId });
-                    table.ForeignKey(
-                        name: "FK_StudentTest_Students_StudentsId",
-                        column: x => x.StudentsId,
-                        principalTable: "Students",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_StudentTest_Tests_TestsId",
-                        column: x => x.TestsId,
-                        principalTable: "Tests",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
@@ -226,7 +201,8 @@ namespace UniversityEnvironment.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     TestId = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
-                    Mark = table.Column<int>(type: "int", nullable: false)
+                    Mark = table.Column<int>(type: "int", nullable: false),
+                    StudentId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
                 },
                 constraints: table =>
                 {
@@ -240,7 +216,7 @@ namespace UniversityEnvironment.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "TestQuestion",
+                name: "TestQuestions",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
@@ -248,9 +224,9 @@ namespace UniversityEnvironment.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TestQuestion", x => x.Id);
+                    table.PrimaryKey("PK_TestQuestions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TestQuestion_Tests_TestId",
+                        name: "FK_TestQuestions_Tests_TestId",
                         column: x => x.TestId,
                         principalTable: "Tests",
                         principalColumn: "Id");
@@ -258,7 +234,32 @@ namespace UniversityEnvironment.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "QuestionAnswer",
+                name: "testsstudents",
+                columns: table => new
+                {
+                    StudentId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    TestId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_testsstudents", x => new { x.StudentId, x.TestId });
+                    table.ForeignKey(
+                        name: "FK_testsstudents_Students_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Students",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_testsstudents_Tests_TestId",
+                        column: x => x.TestId,
+                        principalTable: "Tests",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "QuestionAnswers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
@@ -266,34 +267,34 @@ namespace UniversityEnvironment.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_QuestionAnswer", x => x.Id);
+                    table.PrimaryKey("PK_QuestionAnswers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_QuestionAnswer_TestQuestion_QuestionId",
+                        name: "FK_QuestionAnswers_TestQuestions_QuestionId",
                         column: x => x.QuestionId,
-                        principalTable: "TestQuestion",
+                        principalTable: "TestQuestions",
                         principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "QuestionAnswerStudent",
+                name: "questionanswersstudents",
                 columns: table => new
                 {
-                    QuestionAnswersId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    StudentsId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                    StudentId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    QuestionAnswerId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_QuestionAnswerStudent", x => new { x.QuestionAnswersId, x.StudentsId });
+                    table.PrimaryKey("PK_questionanswersstudents", x => new { x.StudentId, x.QuestionAnswerId });
                     table.ForeignKey(
-                        name: "FK_QuestionAnswerStudent_QuestionAnswer_QuestionAnswersId",
-                        column: x => x.QuestionAnswersId,
-                        principalTable: "QuestionAnswer",
+                        name: "FK_questionanswersstudents_QuestionAnswers_QuestionAnswerId",
+                        column: x => x.QuestionAnswerId,
+                        principalTable: "QuestionAnswers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_QuestionAnswerStudent_Students_StudentsId",
-                        column: x => x.StudentsId,
+                        name: "FK_questionanswersstudents_Students_StudentId",
+                        column: x => x.StudentId,
                         principalTable: "Students",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -301,34 +302,29 @@ namespace UniversityEnvironment.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AdminCourse_CoursesId",
-                table: "AdminCourse",
-                column: "CoursesId");
+                name: "IX_coursesadmins_CourseId",
+                table: "coursesadmins",
+                column: "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CourseStudent_StudentsId",
-                table: "CourseStudent",
-                column: "StudentsId");
+                name: "IX_coursesstudents_CourseId",
+                table: "coursesstudents",
+                column: "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CourseTeacher_TeachersId",
-                table: "CourseTeacher",
-                column: "TeachersId");
+                name: "IX_coursesteachers_CourseId",
+                table: "coursesteachers",
+                column: "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_QuestionAnswer_QuestionId",
-                table: "QuestionAnswer",
+                name: "IX_QuestionAnswers_QuestionId",
+                table: "QuestionAnswers",
                 column: "QuestionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_QuestionAnswerStudent_StudentsId",
-                table: "QuestionAnswerStudent",
-                column: "StudentsId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StudentTest_TestsId",
-                table: "StudentTest",
-                column: "TestsId");
+                name: "IX_questionanswersstudents_QuestionAnswerId",
+                table: "questionanswersstudents",
+                column: "QuestionAnswerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TestMarks_TestId",
@@ -336,36 +332,41 @@ namespace UniversityEnvironment.Data.Migrations
                 column: "TestId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TestQuestion_TestId",
-                table: "TestQuestion",
+                name: "IX_TestQuestions_TestId",
+                table: "TestQuestions",
                 column: "TestId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tests_CourseId",
                 table: "Tests",
                 column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_testsstudents_TestId",
+                table: "testsstudents",
+                column: "TestId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AdminCourse");
+                name: "coursesadmins");
 
             migrationBuilder.DropTable(
-                name: "CourseStudent");
+                name: "coursesstudents");
 
             migrationBuilder.DropTable(
-                name: "CourseTeacher");
+                name: "coursesteachers");
 
             migrationBuilder.DropTable(
-                name: "QuestionAnswerStudent");
-
-            migrationBuilder.DropTable(
-                name: "StudentTest");
+                name: "questionanswersstudents");
 
             migrationBuilder.DropTable(
                 name: "TestMarks");
+
+            migrationBuilder.DropTable(
+                name: "testsstudents");
 
             migrationBuilder.DropTable(
                 name: "Admins");
@@ -374,13 +375,13 @@ namespace UniversityEnvironment.Data.Migrations
                 name: "Teachers");
 
             migrationBuilder.DropTable(
-                name: "QuestionAnswer");
+                name: "QuestionAnswers");
 
             migrationBuilder.DropTable(
                 name: "Students");
 
             migrationBuilder.DropTable(
-                name: "TestQuestion");
+                name: "TestQuestions");
 
             migrationBuilder.DropTable(
                 name: "Tests");

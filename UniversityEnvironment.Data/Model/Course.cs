@@ -15,7 +15,10 @@ namespace UniversityEnvironment.Data.Model
         private List<Test>? _tests;
         private List<Admin>? _admins;
         private List<Teacher>? _teachers;
-        private List<Student>? _students = new List<Student>();
+        private List<Student>? _students;
+        private List<CourseAdmin>? _coursesAdmins;
+        private List<CourseTeacher>? _coursesTeachers;
+        private List<CourseStudent>? _coursesStudents;
 
         public string? Name { get => _name; set => _name = value; }
         public string? FacultyName { get => _facultyName; set => _facultyName = value; }
@@ -23,6 +26,8 @@ namespace UniversityEnvironment.Data.Model
         public List<Admin>? Admins { get => _admins; set => _admins = value; }
         public List<Teacher>? Teachers { get => _teachers; set => _teachers = value; }
         public List<Student>? Students { get => _students; set => _students = value; }
-        public List<CourseStudent> CourseStudents { get; set; }
+        public List<CourseAdmin>? CoursesAdmins { get => _coursesAdmins; set => _coursesAdmins = value; }
+        public List<CourseTeacher>? CoursesTeachers { get => _coursesTeachers; set => _coursesTeachers = value; }
+        public List<CourseStudent>? CoursesStudents { get => _coursesStudents; set => _coursesStudents = value; }
     }
 }

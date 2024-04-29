@@ -13,7 +13,7 @@ using System.Linq.Expressions;
 
 namespace UniversityEnvironment.Data.Repository
 {
-    public class RepoImplementation<TEntity> : IRepository<TEntity> where TEntity : class
+    public class RepoImplementation<TEntity> : IRepository<TEntity> where TEntity : EnvironmentObject
     {
         private UniversityEnvironmentContext _context;
         private static RepoImplementation<TEntity>? _instance;
@@ -55,16 +55,6 @@ namespace UniversityEnvironment.Data.Repository
             _objects.Add(obj);
             _context.SaveChanges();
             return obj;
-        }
-
-        public void Create(IEnumerable<TEntity> obj)
-        {
-            foreach (var item in obj)
-            {
-                _objects.Add(item);
-            }
-            
-            _context.SaveChanges();
         }
 
         public TEntity? Update(TEntity obj)

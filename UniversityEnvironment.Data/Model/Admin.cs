@@ -8,6 +8,7 @@ namespace UniversityEnvironment.Data.Model
 {
     public class Admin : User
     {
-
+        private List<CourseAdmin>? _coursesAdmins;
+        public List<CourseAdmin>? CoursesAdmins { get => _coursesAdmins; set => _coursesAdmins = value; } 
     }
 }

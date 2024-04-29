@@ -10,7 +10,9 @@ namespace UniversityEnvironment.Data.Model
     {
         private TestQuestion? _question;
         private List<Student>? _students;
+        private List<QuestionAnswerStudent>? _questionAnswersStudents;
         public TestQuestion? Question { get => _question; set => _question = value; }
         public List<Student>? Students { get => _students; set => _students = value; }
+        public List<QuestionAnswerStudent>? QuestionAnswersStudents { get => _questionAnswersStudents; set => _questionAnswersStudents = value; }
     }
 }

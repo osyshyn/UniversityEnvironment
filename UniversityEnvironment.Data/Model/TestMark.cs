@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UniversityEnvironment.Data.Model
 {
-    public class TestMarks : EnvironmentObject
+    public class TestMark : EnvironmentObject
     {
         private Test? _test;
         private int _mark = 0;
